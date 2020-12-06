@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type History struct {
 	ID          int
 	SenderId    int
@@ -7,10 +9,9 @@ type History struct {
 	Money       int
 	Message     string
 	ServiceId   int
-	CreatedAt   datetime
+	CreatedAt   time.Time
 }
 
-type HistoryList struct{
+type HistoryList struct {
 	Histories []History
 }
-

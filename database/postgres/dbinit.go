@@ -1,16 +1,18 @@
 package postgres
+
 import (
 	"context"
+	"fmt"
 	"github.com/jackc/pgx/pgxpool"
-	"log"
 )
 
-func DbInit(database *pgxpool.Pool){
-	DDLs := []string{clientsTable, clientsAccountsTable, ATMsTable, servicesTable, historiesTable}
-	for _, ddl := range DDLs{
+func DbInit(database *pgxpool.Pool) error {
+	var DDLs = []string{clientsTable, clientsAccountsTable, ATMsTable, servicesTable, historiesTable, atmAddresses}
+	for _, ddl := range DDLs {
 		_, err := database.Exec(context.Background(), ddl)
-		if err != nill{
-			log.Fatalf("Can't init this #{ddl} error is ${err}")
+		if err != nil {
+			fmt.Println("Can't init this #{ddl} error is ${err}")
 		}
 	}
+	return nil
 }

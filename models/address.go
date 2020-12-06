@@ -9,6 +9,6 @@ type Address struct {
 	apartmen int
 }
 
-type AddressList struct{
+type AddressList struct {
 	Addresses []Address
 }

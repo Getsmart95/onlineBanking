@@ -1,12 +1,14 @@
 package models
 
+import "time"
+
 type ATM struct {
 	ID        int
 	Name      string
-	Status    boolean
-	CreatedAt datetime
+	Status    bool
+	CreatedAt time.Time
 }
 
-type ATMList struct{
+type ATMList struct {
 	ATMs []ATM
 }

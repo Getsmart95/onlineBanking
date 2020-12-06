@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type Client struct {
 	ID         int
 	Name       string
@@ -8,9 +10,9 @@ type Client struct {
 	Password   string
 	Age        int
 	Gender     string
-	Phone      int
-	Status 	   boolean
-	VerifiedAt datetime
+	Phone      string
+	Status 	   bool
+	VerifiedAt time.Time
 }
 
 type (

@@ -1,31 +1,33 @@
 package models
 
+import "time"
+
 type Account struct {
 	ID            int
 	ClientId      int
 	AccountNumber int
 	Balance       int
-	Status        boolean
-	CardNumber    int
+	Status        bool
+	CardNumber    string
 	LimitTransfer int
 	LimitPayment  int
-	CreatedAt     datetime
-	UntilAt       datetime
+	CreatedAt     time.Time
+	UntilAt       time.Time
 }
 
-type AccountList struct{
+type AccountList struct {
 	Accounts []Account
 }
 
 type AccountWithUserName struct {
 	Account Account
-	Client 	Client
+	Client  Client
 }
 
 type AccountForUser struct {
-	ID int64
-	Name string
+	ID            int64
+	Name          string
 	AccountNumber int64
-	Balance int64
-	Locked bool
+	Balance       int64
+	Locked        bool
 }

@@ -1,14 +1,15 @@
 package services
 
 import (
-	"Golang/onlineBank_core/database/postgres"
-	models "Golang/onlineBank_core/models"
+	"Golang/onlineBank/database/postgres"
+	"Golang/onlineBank/models"
 	"context"
-	"github.com/jackc/pgx/pgxpool"
 	"log"
+
+	"github.com/jackc/pgx/pgxpool"
 )
 
-func AddATM(address string, locked bool, db *pgxpool.Pool) (err error){
+func AddATM(name string, status bool, db *pgxpool.Pool) (err error) {
 	_, err = db.Exec(context.Background(), postgres.AddATMs, name, status)
 	if err != nil {
 		log.Fatalf("Запись недобавлена: %e", err)
@@ -17,21 +18,20 @@ func AddATM(address string, locked bool, db *pgxpool.Pool) (err error){
 	return nil
 }
 
-
-func GetAllATMs(db *pgxpool.Pool) (ATMs []models.ATM, err error){
+func GetAllATMs(db *pgxpool.Pool) (ATMs []models.ATM, err error) {
 	rows, err := db.Query(context.Background(), postgres.GetAllATMs)
 	if err != nil {
 		log.Fatalf("1 wrong")
 		return nil, err
 	}
 
-	//defer func() {
-	//	if innerErr := rows.Close(); innerErr != nil {
-	//		ATMs = nil
-	//	}
-	//}()
+	// defer func() {
+	// 	if innerErr := rows.Close(); innerErr != nil {
+	// 		ATMs = nil
+	// 	}
+	// }()
 
-	for rows.Next(){
+	for rows.Next() {
 		ATM := models.ATM{}
 		err = rows.Scan(&ATM.ID, &ATM.Name, &ATM.Status)
 		if err != nil {
