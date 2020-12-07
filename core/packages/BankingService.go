@@ -8,8 +8,8 @@ import (
 	"fmt"
 )
 
-func AddService(Name string, db *pgxpool.Pool) (err error){
-	_, err = db.Exec(context.Background(), postgres.AddService, Name)
+func AddService(Name string, AccountNumber int64, db *pgxpool.Pool) (err error){
+	_, err = db.Exec(context.Background(), postgres.AddService, Name, AccountNumber)
 	if err != nil {
 		fmt.Errorf("Error in %s, err: %e", postgres.AddService, err)
 		return err

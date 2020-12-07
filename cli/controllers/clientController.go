@@ -1,11 +1,12 @@
 package controllers
 
 import (
+	"context"
+	"fmt"
+	"github.com/jackc/pgx/pgxpool"
+	"log"
 	"onlineBanking/cli/constants"
 	"onlineBanking/core/packages"
-	"context"
-	"github.com/jackc/pgx/pgxpool"
-	"fmt"
 )
 
 func Authorize(db *pgxpool.Pool) (id int64, err error) {
@@ -77,32 +78,46 @@ func AuthorizedOperations(id int64, db *pgxpool.Pool) {
 		case "2":
 			ChooseAccountById(id, db)
 		case "3":
-			//err := PayServiceHandler(id, db)
-			//if err != nil {
-			//	log.Fatal("Uliya")
-			//}
+			err := PayServiceHandler(id, db)
+			if err != nil {
+				log.Fatal("Uliya")
+			}
 		case "q":
 			return
 		}
 	}
 }
 
-func ChooseAccountById(id int64, db *pgxpool.Pool)(err error){
+func ChooseAccountById(id int64, db *pgxpool.Pool) (err error) {
 	AccountNumber, err := ChooseAccount(id, db)
 	fmt.Println("Введите номер карты")
 	var TransferCardNumber string
 	fmt.Scan(&TransferCardNumber)
 	fmt.Println("Введите сумму перевода")
-	var amount int64
-	fmt.Scan(&amount)
-	err = TransferToAccount(AccountNumber, TransferCardNumber, amount, db)
+	var Amount int64
+	fmt.Scan(&Amount)
+	fmt.Println("Введите сообщение получателю")
+	var Message string
+	fmt.Scan(&Message)
+	var TransferAccountNumber int64
+
+	err = db.QueryRow(context.Background(), `select account_number from accounts where card_number = ($1)`, TransferCardNumber).Scan(&TransferAccountNumber)
+	if err != nil {
+		fmt.Println("Карта не существует")
+		return nil
+	}
+	err = TransferToAccount(AccountNumber, TransferCardNumber, Amount, Message, TransferAccountNumber, db)
 	if err != nil {
 		fmt.Println("Невозможно перевести деньги на этот счет")
 	}
 	return nil
 }
+
 ////////////////////////
-func TransferToAccount(AccountNumber int64, TransferCardNumber string, Amount int64, db *pgxpool.Pool) (err error) {
+func TransferToAccount(AccountNumber int64, TransferCardNumber string, Amount int64, Message string, TransferAccountNumber int64, db *pgxpool.Pool) (err error) {
+
+	var ServiceId int64
+	ServiceId = 1
 	//tx, err := db.Begin()
 	//if err != nil {
 	//	return err
@@ -114,12 +129,21 @@ func TransferToAccount(AccountNumber int64, TransferCardNumber string, Amount in
 	//	}
 	//	err = tx.Commit()
 	//}()
-	_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance - ($1) where account_Number = ($2)`, Amount, AccountNumber)
+	_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance - ($1) 
+								                 where account_Number = ($2)`, Amount, AccountNumber)
 	if err != nil {
 		return err
 	}
 
-	_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance + ($1) where card_number = ($2)`, Amount, TransferCardNumber)
+	_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance + ($1) 
+                                                 where card_number = ($2)`, Amount, TransferCardNumber)
+
+	if err != nil {
+		return err
+	}
+	fmt.Println(AccountNumber,TransferCardNumber,Amount, Message,ServiceId)
+	_, err = db.Exec(context.Background(), `insert into histories(sender_account_number, recipient_account_number, money, message, service_id)
+											values( $1, $2, $3, $4, $5 )`, AccountNumber, TransferAccountNumber, Amount, Message, ServiceId)
 	if err != nil {
 		return err
 	}
@@ -151,95 +175,110 @@ func ChooseAccount(id int64, db *pgxpool.Pool) (AccountNumber int64, err error) 
 
 ///////////////////////
 //
-//func PayServiceHandler(id int64, db *pgxpool.Pool) (err error) {
-//	fmt.Println("Выберите счет:")
-//	accounts, err := SearchAccountByIdHandler(id, db)
-//	if err != nil {
-//		return err
-//	}
-//
-//	for {
-//		var cmd int64
-//		fmt.Scan(&cmd)
-//		switch int64(len(accounts)) >= cmd && cmd > 0 {
-//		case true:
-//			ChooseToService(accounts[cmd], db)
-//			return nil
-//		case false:
-//			fmt.Println("Введите заново в пределах количество ваших счетов")
-//		}
-//	}
-//	return nil
-//}
+func PayServiceHandler(id int64, db *pgxpool.Pool) (err error) {
+	fmt.Println("Выберите счет:")
+	accounts, err := SearchAccountByIdHandler(id, db)
+	if err != nil {
+		return err
+	}
 
-//func GetAllServicesHandler(db *pgxpool.Pool) (err error) {
-	//services, err := postgres.GetAllServices(db)
+	for {
+		var cmd int64
+		fmt.Scan(&cmd)
+		switch int64(len(accounts)) >= cmd && cmd > 0 {
+		case true:
+			ChooseToService(accounts[cmd], db)
+			return nil
+		case false:
+			fmt.Println("Введите заново в пределах количество ваших счетов")
+		}
+	}
+	return nil
+}
+
+func GetAllServicesHandler(db *pgxpool.Pool) (err error) {
+services, err := services.GetAllServices(db)
+if err != nil {
+	fmt.Errorf("Get all services didn't work %e", err)
+	return nil
+}
+
+for _, service := range services {
+	fmt.Println(service.ID, service.Name, service.AccountNumber)
+}
+return nil
+}
+
+func ChooseToService(AccountNumber int64, db *pgxpool.Pool) (err error) {
+	fmt.Println("Выберите услугу: ")
+	err = GetAllServicesHandler(db)
+	if err != nil {
+		fmt.Errorf("GetServiceHandler %e", err)
+		return err
+	}
+	for {
+		var cmd int64
+		fmt.Scan(&cmd)
+		err := services.CheckServiceHaving(cmd, db)
+		if err != nil {
+			fmt.Println("Такой услуги нет, попробуйте еще раз")
+			continue
+		} else {
+			fmt.Println("Введите сумму оплаты: ")
+			var Ammount int64
+			fmt.Scan(&Ammount)
+			err := Transfer(AccountNumber, Ammount, cmd, db)
+			if err != nil {
+				fmt.Println("Перевод невозможен")
+			}
+		}
+		return nil
+	}
+}
+
+func Transfer(accountNumber int64, Ammount int64, ServiceID int64, db *pgxpool.Pool) (err error) {
+	//tx, err := db.Begin()
 	//if err != nil {
-	//	fmt.Errorf("Get all services didn't work %e", err)
-	//	return nil
+	//	return err
 	//}
-	//
-	//for _, service := range services {
-	//	fmt.Println(service.ID, service.Name, service.Price)
+	//defer func() {
+	//	if err != nil {
+	//		_ = tx.Rollback()
+	//		return
+	//	}
+	//	err = tx.Commit()
+	//}()
+	var Message string
+	Message = "Оплата услуги"
+
+	//var AccountBalance int64
+	//err = db.QueryRow(context.Background(), `select balance from accounts where accountNumber = ($1)`, accountNumber).Scan(&AccountBalance)
+	//if err != nil {
+	//	return err
 	//}
-	//return nil
-//}
-//
-//func ChooseToService(AccountNumber int64, db *pgxpool.Pool) (err error) {
-//	fmt.Println("Выберите услугу: ")
-//	err = GetAllServicesHandler(db)
-//	if err != nil {
-//		fmt.Errorf("GetServiceHandler %e", err)
-//		return err
-//	}
-//	for {
-//		var cmd int64
-//		fmt.Scan(&cmd)
-//		err := services.CheckServiceHaving(cmd, db)
-//		if err != nil {
-//			fmt.Println("Такой услуги нет, попробуйте еще раз")
-//			continue
-//		} else {
-//			err := Transfer(AccountNumber, cmd, db)
-//			if err != nil {
-//				fmt.Println("Перевод невозможен")
-//			}
-//		}
-//		return nil
-//	}
-//}
-//
-//func Transfer(accountNumber, ServiceID int64, db *pgxpool.Pool) (err error) {
-//	tx, err := db.Begin()
-//	if err != nil {
-//		return err
-//	}
-//	defer func() {
-//		if err != nil {
-//			_ = tx.Rollback()
-//			return
-//		}
-//		err = tx.Commit()
-//	}()
-//	var AccountBalance int64
-//	err = tx.QueryRow(`select balance from accounts where accountNumber = ?`, accountNumber).Scan(&AccountBalance)
-//	if err != nil {
-//		return err
-//	}
-//	var ServicePrice int64
-//	err = tx.QueryRow(`select price from services where id = ?`, ServiceID).Scan(&ServicePrice)
-//	if err != nil {
-//		return err
-//	}
-//
-//	_, err = tx.Exec(`UPDATE services set balance = balance + price where id = ?`, ServiceID)
-//	if err != nil {
-//		return err
-//	}
-//	_, err = tx.Exec(`UPDATE accounts set balance = balance - ? where accountNumber = ?`, ServicePrice, accountNumber)
-//	if err != nil {
-//		return err
-//	}
-//
-//	return nil
-//}
+	var ServiceAccountNumber int64
+	err = db.QueryRow(context.Background(), `select account_number from services where id = ($1)`, ServiceID).Scan(&ServiceAccountNumber)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance - ($1) where account_number = ($2)`, Ammount, accountNumber)
+	if err != nil {
+		return err
+	}
+	_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance + ($1) where account_number = ($2)`, Ammount, ServiceAccountNumber)
+	if err != nil {
+		return err
+	}
+	_, err = db.Exec(context.Background(), `insert into histories(sender_account_number, recipient_account_number, money, message, service_id)
+											values( $1, $2, $3, $4, $5 )`, accountNumber, ServiceAccountNumber, Ammount, Message, ServiceID)
+	if err != nil {
+		return err
+	}
+	//_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance - ? where accountNumber = ?`, ServicePrice, accountNumber)
+	//if err != nil {
+	//	return err
+	//}
+
+	return nil
+}

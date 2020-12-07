@@ -53,7 +53,13 @@ func SearchAccountById(id int64, db *pgxpool.Pool) (Accounts []models.AccountFor
 	defer rows.Close()
 
 	for rows.Next() {
-		rows.Scan(&account.ID, &account.ClientId, &account.AccountNumber, &account.Balance, &account.Status, &account.CardNumber)
+		rows.Scan(
+			&account.ID,
+			&account.ClientId,
+			&account.AccountNumber,
+			&account.Balance,
+			&account.Status,
+			&account.CardNumber)
 
 		Accounts = append(Accounts, account)
 	}

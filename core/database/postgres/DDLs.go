@@ -36,16 +36,17 @@ const ATMsTable = `create table if not exists atms(
 
 const servicesTable = `create table if not exists services(
                                        id bigserial primary key,
-                                       name text not null
+                                       name text not null,
+									   account_number integer not null	
 );`
 
 const historiesTable = `create table if not exists histories(
                                          id bigserial primary key,
-                                         sender_id integer references clients,
-                                         recipient_id integer references clients,
+                                         sender_account_number integer not null,
+                                         recipient_account_number integer not null,
                                          money integer not null,
                                          message text not null,
-                                         service_id integer references services,
+                                         service_id integer,
                                          created_at time default CURRENT_TIMESTAMP
 );`
 

@@ -15,8 +15,8 @@ const AddATMs = `insert into atms( name, status )
 const changeStatusATM = `update atms
 	set status = $status where id = $atmId`
 
-const AddService = `insert into services( name )
-	values( $1 )`
+const AddService = `insert into services( name, account_number )
+	values( $1, $2 )`
 
 const GetAllClients = `select * from clients`
 

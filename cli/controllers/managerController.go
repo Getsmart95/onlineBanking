@@ -59,7 +59,14 @@ func AddClientHandler(db *pgxpool.Pool) (err error) {
 		return err
 	}
 
-	err = services.AddClient(newClient.Name, newClient.Surname, newClient.Login, newClient.Password, newClient.Age, newClient.Gender, newClient.Phone, db)
+	err = services.AddClient(
+		newClient.Name,
+		newClient.Surname,
+		newClient.Login,
+		newClient.Password,
+		newClient.Age,
+		newClient.Gender,
+		newClient.Phone, db)
 	if err != nil {
 		log.Fatalf("Ne dobavilas")
 	}
@@ -189,10 +196,13 @@ func AddServiceHandler(db *pgxpool.Pool) (err error) {
 		log.Fatalf("Can't read command: %v", err)
 		return err
 	}
-
 	serviceName := fmt.Sprintf("%s %s", input, Address)
+	fmt.Println("Введите номер аккаунта владельца услуги:")
+	var accountNumber int64
+	fmt.Scan(&accountNumber)
 
-	err = services.AddService(serviceName, db)
+
+	err = services.AddService(serviceName, accountNumber, db)
 	if err != nil {
 		fmt.Errorf("errorr %e", err)
 		return err
@@ -354,7 +364,14 @@ func AddClientsFromXmlJson(db *pgxpool.Pool) (err error){
 	}
 
 	for _, user := range clients.Clients{
-		err = services.AddClient(user.Name, user.Surname, user.Login, user.Password, user.Age, user.Gender, user.Phone, db)
+		err = services.AddClient(
+			user.Name,
+			user.Surname,
+			user.Login,
+			user.Password,
+			user.Age,
+			user.Gender,
+			user.Phone, db)
 		if err != nil {
 			log.Fatalf("Ne tut to bilo delo")
 			return err
@@ -374,7 +391,14 @@ func AddClientsFromXmlJson(db *pgxpool.Pool) (err error){
 	}
 	for _, user := range clientList.Clients{
 		fmt.Println(user.Name, user.Surname, user.Login, user.Password, user.Age, user.Gender, user.Phone)
-		err = services.AddClient(user.Name, user.Surname, user.Login, user.Password, user.Age, user.Gender, user.Phone, db)
+		err = services.AddClient(
+			user.Name,
+			user.Surname,
+			user.Login,
+			user.Password,
+			user.Age,
+			user.Gender,
+			user.Phone, db)
 		if err != nil {
 			log.Fatalf("Ne tut to bilo delo")
 			return err
@@ -398,12 +422,23 @@ func AddAccountsFromXmlJson(db *pgxpool.Pool) (err error) {
 
 	for _, Account := range AccountList.AccountWithUserName{
 		fmt.Println(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Age, Account.Client.Gender, Account.Client.Phone)
-		err = services.AddClient(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Age, Account.Client.Gender, Account.Client.Phone, db)
+		err = services.AddClient(
+			Account.Client.Name,
+			Account.Client.Surname,
+			Account.Client.Login,
+			Account.Client.Password,
+			Account.Client.Age,
+			Account.Client.Gender,
+			Account.Client.Phone, db)
 		if err != nil {
 			log.Fatalf("Ne poluchilos Add Client %s", err)
 			return err
 		}
-		err = services.AddAccount(Account.Account.ClientId, Account.Account.Balance, Account.Account.Status, Account.Account.CardNumber, db)
+		err = services.AddAccount(
+			Account.Account.ClientId,
+			Account.Account.Balance,
+			Account.Account.Status,
+			Account.Account.CardNumber, db)
 		if err != nil {
 			log.Fatalf("Ne poluchilos Add Account %s", err)
 			return err
@@ -424,13 +459,23 @@ func AddAccountsFromXmlJson(db *pgxpool.Pool) (err error) {
 
 	for _, Account := range AccountList.AccountWithUserName{
 		fmt.Println(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Phone)
-		err = services.AddClient(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Age, Account.Client.Gender, Account.Client.Phone, db)
+		err = services.AddClient(
+			Account.Client.Name,
+			Account.Client.Surname,
+			Account.Client.Login,
+			Account.Client.Password,
+			Account.Client.Age,
+			Account.Client.Gender,
+			Account.Client.Phone, db)
 		if err != nil {
 			log.Fatalf("Ne poluchilos Add Client %s", err)
 			return err
 		}
-		err = services.AddAccount(Account.Account.ClientId, Account.Account.Balance, Account.Account.Status, Account.Account.CardNumber, db)
-		//err = dbupdate.AddAccount(Account.Account.UserId, Account.Account.Name, Account.Account.Locked, db)
+		err = services.AddAccount(
+			Account.Account.ClientId,
+			Account.Account.Balance,
+			Account.Account.Status,
+			Account.Account.CardNumber, db)
 		if err != nil {
 			log.Fatalf("Ne poluchilos Add Account %s", err)
 			return err

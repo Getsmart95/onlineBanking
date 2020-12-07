@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68655705-3df4-4b9e-8ba8-f3c47a437411" name="Default Changelist" comment="" />
+    <list default="true" id="68655705-3df4-4b9e-8ba8-f3c47a437411" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/controllers/clientController.go" beforeDir="false" afterPath="$PROJECT_DIR$/cli/controllers/clientController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/controllers/managerController.go" beforeDir="false" afterPath="$PROJECT_DIR$/cli/controllers/managerController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/database/postgres/DDLs.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/database/postgres/DDLs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/database/postgres/DMLs.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/database/postgres/DMLs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/History.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/History.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/Service.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/Service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/packages/AccountService.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/packages/AccountService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/packages/BankingService.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/packages/BankingService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/packages/HistoryService.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/packages/HistoryService.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,16 +69,6 @@
         <item name="public: schema" type="983ebcf7:PgImplModel$Schema" />
         <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="postgres@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="postgres: database" type="162271b6:PgImplModel$Database" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="public: schema" type="983ebcf7:PgImplModel$Schema" />
-        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="clients: table" type="69fad909:PgImplModel$LocalTable" />
-      </path>
     </expand>
     <select />
   </component>
@@ -116,7 +117,17 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:postgres@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@5bf33f22" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:postgres@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
                 <item name="com.intellij.database.console.session.MessageBusSession@581c2073" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:postgres@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@467ea571" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -141,30 +152,30 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="549" y="173" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1607339290474" />
-    <state width="1024" height="213" key="GridCell.Tab.0.bottom" timestamp="1607360827286">
+    <state width="1024" height="213" key="GridCell.Tab.0.bottom" timestamp="1607368443436">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1607360827286" />
-    <state width="1024" height="213" key="GridCell.Tab.0.center" timestamp="1607360827286">
+    <state width="1024" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1607368443436" />
+    <state width="1024" height="213" key="GridCell.Tab.0.center" timestamp="1607368443436">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1607360827286" />
-    <state width="1024" height="213" key="GridCell.Tab.0.left" timestamp="1607360827286">
+    <state width="1024" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1607368443436" />
+    <state width="1024" height="213" key="GridCell.Tab.0.left" timestamp="1607368443436">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1607360827286" />
-    <state width="1024" height="213" key="GridCell.Tab.0.right" timestamp="1607360827286">
+    <state width="1024" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1607368443436" />
+    <state width="1024" height="213" key="GridCell.Tab.0.right" timestamp="1607368443436">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1607360827286" />
+    <state width="1024" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1607368443436" />
     <state width="189" height="457" key="HiddenNamespacesPopup" timestamp="1607112298252">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="189" height="457" key="HiddenNamespacesPopup/0.0.1536.834@0.0.1536.834" timestamp="1607112298252" />
-    <state x="664" y="308" width="322" height="234" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1607348197171">
+    <state x="664" y="308" width="322" height="234" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1607366499821">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="664" y="308" width="322" height="234" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.834@0.0.1536.834" timestamp="1607348197171" />
+    <state x="664" y="308" width="322" height="234" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.834@0.0.1536.834" timestamp="1607366499821" />
     <state x="523" y="172" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1607292101001">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -177,10 +188,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="628" y="164" key="com.intellij.database.view.ui.DbObjectDialog/0.0.1536.834@0.0.1536.834" timestamp="1607266822967" />
-    <state x="462" y="149" width="611" height="536" key="find.popup" timestamp="1607360898916">
+    <state x="462" y="149" width="611" height="536" key="find.popup" timestamp="1607366882495">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="462" y="149" width="611" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1607360898916" />
+    <state x="462" y="149" width="611" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1607366882495" />
     <state x="511" y="38" key="refactoring.ChangeSignatureDialog" timestamp="1607269444733">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
