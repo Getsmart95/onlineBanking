@@ -1,5 +1,6 @@
-package main
-const AuthorizedOperationss = `Список доступных операций:
+package constants
+
+const AuthorizedOperations = `Список доступных операций:
 1. Добавить пользователя 
 2. Добавить счет пользователю
 3. Добавить услуги

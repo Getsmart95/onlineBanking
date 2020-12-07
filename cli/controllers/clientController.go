@@ -1,14 +1,11 @@
 package controllers
 
-import "C"
 import (
-	//"Golang/onlineBank/database/postgres"
-	"Golang/onlineBank/packages"
+	"Golang/onlineBanking/cli/constants"
+	"Golang/onlineBanking/core/packages"
+	"context"
 	"github.com/jackc/pgx/pgxpool"
 	"fmt"
-
-
-	// "github.com/dsurush/arm-core/dbupdate"
 )
 
 func Authorize(db *pgxpool.Pool) (id int64, err error) {
@@ -59,12 +56,12 @@ func SearchAccountByIdHandler(id int64, db *pgxpool.Pool) (accounts map[int64]in
 		fmt.Errorf("cant : %e", err)
 		return nil, err
 	}
+
 	fmt.Println("Список ваших счетов:")
-	//	var index64 int64
 	for index, account := range list {
 		index64 := int64(1 + index)
 		accounts[index64] = account.AccountNumber
-		fmt.Println(index+1, ".", account.Name, account.AccountNumber, account.Balance)
+		fmt.Println(index+1, ".", account.ClientId, account.AccountNumber, account.Balance)
 	}
 	return accounts, nil
 }
@@ -72,23 +69,13 @@ func SearchAccountByIdHandler(id int64, db *pgxpool.Pool) (accounts map[int64]in
 func AuthorizedOperations(id int64, db *pgxpool.Pool) {
 	var cmd string
 	for {
-		fmt.Println(AuthorizedTextOperations)
+		fmt.Println(constants.AuthorizedTextOperations)
 		fmt.Scan(&cmd)
 		switch cmd {
 		case "1":
 			SearchAccountByIdHandler(id, db)
 		case "2":
-			//AccountNumber, err := ChooseAccount(id, db)
-			fmt.Println("Введите номер счета")
-			var newAccountNumber int64
-			fmt.Scan(&newAccountNumber)
-			fmt.Println("Введите сумму перевода")
-			var amount int64
-			fmt.Scan(&amount)
-			//err = TransferToAccount(AccountNumber, newAccountNumber, amount, db)
-			//if err != nil {
-			//	fmt.Println("Невозможно перевести деньги на этот счет")
-			//}
+			ChooseAccountById(id, db)
 		case "3":
 			//err := PayServiceHandler(id, db)
 			//if err != nil {
@@ -100,8 +87,22 @@ func AuthorizedOperations(id int64, db *pgxpool.Pool) {
 	}
 }
 
+func ChooseAccountById(id int64, db *pgxpool.Pool)(err error){
+	AccountNumber, err := ChooseAccount(id, db)
+	fmt.Println("Введите номер карты")
+	var TransferCardNumber string
+	fmt.Scan(&TransferCardNumber)
+	fmt.Println("Введите сумму перевода")
+	var amount int64
+	fmt.Scan(&amount)
+	err = TransferToAccount(AccountNumber, TransferCardNumber, amount, db)
+	if err != nil {
+		fmt.Println("Невозможно перевести деньги на этот счет")
+	}
+	return nil
+}
 ////////////////////////
-//func TransferToAccount(AccountNumber, NewAccountNumber, Amount int64, db *pgxpool.Pool) (err error) {
+func TransferToAccount(AccountNumber int64, TransferCardNumber string, Amount int64, db *pgxpool.Pool) (err error) {
 	//tx, err := db.Begin()
 	//if err != nil {
 	//	return err
@@ -113,17 +114,18 @@ func AuthorizedOperations(id int64, db *pgxpool.Pool) {
 	//	}
 	//	err = tx.Commit()
 	//}()
-	//_, err = tx.Exec(`UPDATE accounts set balance = balance - ? where accountNumber = ?`, Amount, AccountNumber)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//_, err = tx.Exec(`UPDATE accounts set balance = balance + ? where accountNumber = ?`, Amount, NewAccountNumber)
-	//if err != nil {
-	//	return err
-	//}
-	//return nil
-//}
+	_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance - ($1) where account_Number = ($2)`, Amount, AccountNumber)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance + ($1) where card_number = ($2)`, Amount, TransferCardNumber)
+	if err != nil {
+		return err
+	}
+	fmt.Println("Перевод денег успешно выполнено!")
+	return nil
+}
 
 ///////////////////////
 func ChooseAccount(id int64, db *pgxpool.Pool) (AccountNumber int64, err error) {

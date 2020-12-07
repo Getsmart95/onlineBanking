@@ -1,12 +1,11 @@
 package services
 
 import (
-	"Golang/onlineBank/database/postgres"
-	"Golang/onlineBank/models"
+	"Golang/onlineBanking/core/database/postgres"
+	"Golang/onlineBanking/core/models"
 	"context"
-	"log"
-
 	"github.com/jackc/pgx/pgxpool"
+	"log"
 )
 
 func AddATM(name string, status bool, db *pgxpool.Pool) (err error) {
@@ -25,11 +24,13 @@ func GetAllATMs(db *pgxpool.Pool) (ATMs []models.ATM, err error) {
 		return nil, err
 	}
 
-	// defer func() {
-	// 	if innerErr := rows.Close(); innerErr != nil {
-	// 		ATMs = nil
-	// 	}
-	// }()
+
+	defer rows.Close()
+	//defer func() {
+	//	if innerErr := rows.Close(); innerErr != nil {
+	//		ATMs = nil
+	//	}
+	//}()
 
 	for rows.Next() {
 		ATM := models.ATM{}

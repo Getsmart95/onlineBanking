@@ -10,7 +10,7 @@ const updateLimit = `update accounts
 	set limit_transfer = $limit_transfer, limit_payment = $limit_payment where id = $accountId`
 
 const AddATMs = `insert into atms( name, status )
-	values( $name, $status )`
+	values( $1, $2 )`
 
 const changeStatusATM = `update atms
 	set status = $status where id = $atmId`
@@ -18,17 +18,17 @@ const changeStatusATM = `update atms
 const AddService = `insert into services( name )
 	values( $1 )`
 
-const GetAllClients = `select *from clients`
+const GetAllClients = `select * from clients`
 
 const GetAllAccounts = `select * from accounts a left join clients c on a.client_id = c.id`
 
-const GetAllATMs = `select *from ATMs`
+const GetAllATMs = `select * from ATMs`
 
 const LoginSQL = `select login, password from clients where login = ($1)`
 
 const SearchClientByLogin = `select id, surname from clients where login = ($1)`
 
-const SearchAccountByID = `select id, name, accountNumber, balance, locked from accounts where locked = true and user_id = ?`
+const SearchAccountByID = `select id, client_id, account_number, balance, status, card_number from accounts where status = true and client_id = ($1)`
 
 const GetAllServices = `select id, name from services`
 

@@ -1,23 +1,19 @@
 package services
 
 import (
-	"Golang/onlineBank/database/postgres"
-	"Golang/onlineBank/models"
+	"Golang/onlineBanking/core/database/postgres"
+	"Golang/onlineBanking/core/models"
+	"github.com/jackc/pgx/pgxpool"
 	"context"
 	"crypto/md5"
-	"database/sql"
 	"fmt"
 	"log"
-
-	"github.com/jackc/pgx/pgxpool"
 )
 
 func AddClient(name string, surname string, login string, password string, age int, gender string, phone string, db *pgxpool.Pool) (err error) {
 	status := true
 	password = MakeHash(password)
-	//fmt.Println(name, surname, login, password,age,gender,phoneNumber,status)
 	_, err = db.Exec(context.Background(), postgres.AddClient, name, surname, login, password, age, gender, phone, status)
-	fmt.Println(postgres.AddClient)
 	if err != nil {
 		log.Fatalf("Пользователь недобавлен: %s", err)
 		return err
@@ -35,18 +31,18 @@ func QueryError(text string) (err error) {
 	return fmt.Errorf(text)
 }
 
-func GetAllClients(db *sql.DB) (clients []models.Client, err error) {
-	rows, err := db.Query(postgres.GetAllClients)
+func GetAllClients(db *pgxpool.Pool) (clients []models.Client, err error) {
+	rows, err := db.Query(context.Background(), postgres.GetAllClients)
 	if err != nil {
 		log.Fatalf("1 wrong")
 		return nil, err
 	}
 
-	defer func() {
-		if innerErr := rows.Close(); innerErr != nil {
-			clients = nil
-		}
-	}()
+	//defer func() {
+	//	if innerErr := rows.Close(); innerErr != nil {
+	//		clients = nil
+	//	}
+	//}()
 
 	for rows.Next() {
 		client := models.Client{}
@@ -66,10 +62,8 @@ func GetAllClients(db *sql.DB) (clients []models.Client, err error) {
 
 func Login(login string, password string, db *pgxpool.Pool) (loginPredicate bool, err error) {
 	var dbLogin, dbPassword string
-	fmt.Println(login, password)
 	err = db.QueryRow(context.Background(), postgres.LoginSQL, login).Scan(&dbLogin, &dbPassword)
-	fmt.Println(dbLogin, dbPassword)
-	fmt.Println(err)
+
 	if err != nil {
 		//		fmt.Printf("%s, %e\n", loginSQL, err)
 		return false, err

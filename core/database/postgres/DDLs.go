@@ -29,9 +29,8 @@ const clientsAccountsTable = `create table if not exists accounts(
 
 const ATMsTable = `create table if not exists atms(
                                    id bigserial primary key,
-                                   address_id integer,
-                                   status boolean not null,
-                                   created_at time default CURRENT_TIMESTAMP
+                                   name text not null,
+                                   status boolean not null
 );`
 
 const servicesTable = `create table if not exists services(

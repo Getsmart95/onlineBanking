@@ -1,34 +1,29 @@
 package main
 
 import (
-	"Golang/onlineBank/cli/clientCli/controllers"
+	"Golang/onlineBanking/cli/constants"
+	"Golang/onlineBanking/cli/controllers"
 	"context"
-	"github.com/jackc/pgx/pgxpool"
 	"fmt"
+	"github.com/jackc/pgx/pgxpool"
 	"log"
 	"os"
-
 )
-const unauthorizedOperations = `Список доступных операций:
-1. Авторизация
-3. Список банкоматов
-q. Выйти из приложения
 
-Введите команду`
 func main() {
 	db, err := pgxpool.Connect(context.Background(), `postgresql://root@localhost:5432/postgres?sslmode=disable`)
-	//db, err := sql.Open("sqlite3", "db.sqlite")
+
 	if err != nil {
 		log.Fatalf("Ошибка открытия базы данных %s", err)
 	}
 	defer db.Close()
 
-	mainAppFunction(db)
+	AutorizeByClient(db)
 }
-func mainAppFunction(db *pgxpool.Pool) {
+func AutorizeByClient(db *pgxpool.Pool) {
 	var cmd string
 	for {
-		fmt.Println(unauthorizedOperations)
+		fmt.Println(constants.UnauthorizedOperations)
 		fmt.Scan(&cmd)
 		switch cmd {
 		case "1":
@@ -39,7 +34,7 @@ func mainAppFunction(db *pgxpool.Pool) {
 			} else {
 				controllers.AuthorizedOperations(id, db)
 			}
-		case "3":
+		case "2":
 			err := controllers.GetATMsForClient(db)
 			if err != nil {
 				fmt.Printf("Ошибка выдачи списка банкоматов %s:", err)
@@ -47,7 +42,7 @@ func mainAppFunction(db *pgxpool.Pool) {
 		case "q":
 			os.Exit(0)
 		default:
-			fmt.Println("Введена неверная команда, попробуйте еще раз", unauthorizedOperations)
+			fmt.Println("Введена неверная команда, попробуйте еще раз", constants.UnauthorizedOperations)
 			continue
 		}
 	}

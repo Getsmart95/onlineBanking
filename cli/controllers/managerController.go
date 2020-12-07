@@ -1,25 +1,18 @@
 package controllers
 
 import (
-	//"Golang/onlineBank/cli/managerCli/models"
-	"Golang/onlineBank/models"
-	services "Golang/onlineBank/packages"
+	"Golang/onlineBanking/core/models"
+	"Golang/onlineBanking/core/packages"
 	"bufio"
-	//"database/sql"
 	//"encoding/json"
 	//"encoding/xml"
 	"fmt"
 	"github.com/jackc/pgx/pgxpool"
-
-	// "github.com/dsurush/arm-cli/manager-cli/models"
-	// "github.com/dsurush/arm-core/dbupdate"
-	// "github.com/dsurush/arm-core/dbupdate/cmodels"
-	//"io/ioutil"
 	"log"
 	"os"
 )
 
-func AddClientHandler(db *pgxpool.Pool) (err error){
+func AddClientHandler(db *pgxpool.Pool) (err error) {
 	fmt.Println("Enter your data")
 
 	var newClient models.Client
@@ -75,16 +68,55 @@ func AddClientHandler(db *pgxpool.Pool) (err error){
 	return nil
 }
 
-func AddATMHandler(db *pgxpool.Pool) (err error){
+func AddATMHandler(db *pgxpool.Pool) (err error) {
 
 	var newATM models.ATM
 
 	fmt.Println("Enter ATMs address")
+	//fmt.Println("Введите страну: ")
+	//var country string
+	//_, err = fmt.Scan(&country)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//fmt.Println("Введите город: ")
+	//var city string
+	//_, err = fmt.Scan(&city)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//fmt.Println("Введите улицу: ")
+	//var street string
+	//_, err = fmt.Scan(&street)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//fmt.Println("Введите дом: ")
+	//var home string
+	//_, err = fmt.Scan(&home)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//fmt.Println("Enter true if atm is activity, else false")
+	//_, err = fmt.Scan(&newATM.Status)
+	//if err != nil {
+	//	log.Printf("Ошибка при вводе данных")
+	//	return err
+	//}
+	var input string
+	fmt.Scan(&input)
 	reader := bufio.NewReader(os.Stdin)
-	newATM.Name, err = reader.ReadString('\n')
+	Address, err := reader.ReadString('\n')
 	if err != nil {
 		log.Fatalf("Can't read command: %v", err)
+		return err
 	}
+
+	newATM.Name = fmt.Sprintf("%s %s", input, Address)
 
 	fmt.Println("Enter true if atm is activity, else false")
 	_, err = fmt.Scan(&newATM.Status)
@@ -92,7 +124,6 @@ func AddATMHandler(db *pgxpool.Pool) (err error){
 		log.Printf("Ошибка при вводе данных")
 		return err
 	}
-
 	err = services.AddATM(newATM.Name, newATM.Status, db)
 	if err != nil {
 		log.Printf("Проблема соединения с сервером %e", err)
@@ -100,7 +131,7 @@ func AddATMHandler(db *pgxpool.Pool) (err error){
 	}
 
 	activity := "Не активный"
-	if newATM.Status == true{
+	if newATM.Status == true {
 		activity = "активный"
 	}
 	fmt.Printf("Был добавлен АТМ по адрессу: %s\nТип активности: %s", newATM.Name, activity)
@@ -108,7 +139,7 @@ func AddATMHandler(db *pgxpool.Pool) (err error){
 	return nil
 }
 
-func AddAccountHandler(db *pgxpool.Pool) (err error){
+func AddAccountHandler(db *pgxpool.Pool) (err error) {
 	fmt.Println("Введите ID пользователя: ")
 	var clientId int64
 	_, err = fmt.Scan(&clientId)
@@ -130,7 +161,6 @@ func AddAccountHandler(db *pgxpool.Pool) (err error){
 		return err
 	}
 
-
 	fmt.Println("Введите 1 если хотите разблокировать сейчас же счет, иначе 0:")
 	status := false
 	var typeOfLock int
@@ -138,7 +168,7 @@ func AddAccountHandler(db *pgxpool.Pool) (err error){
 	if err != nil {
 		return err
 	}
-	if typeOfLock == 1{
+	if typeOfLock == 1 {
 		status = true
 	}
 	err = services.AddAccount(clientId, balance, status, cardNumber, db)
@@ -150,26 +180,16 @@ func AddAccountHandler(db *pgxpool.Pool) (err error){
 
 func AddServiceHandler(db *pgxpool.Pool) (err error) {
 	fmt.Println("Введите название услуги:")
-	var serviceName string
-	_, err = fmt.Scan(&serviceName)
+	var input string
+	fmt.Scan(&input)
+	reader := bufio.NewReader(os.Stdin)
+	Address, err := reader.ReadString('\n')
 	if err != nil {
+		log.Fatalf("Can't read command: %v", err)
 		return err
 	}
-	//reader := bufio.NewReader(os.Stdin)
-	//serviceName, err = reader.ReadString('\n')
 
-	//if err != nil {
-	//	log.Fatalf("Can't read command: %v", err)
-	//	return err
-	//}
-
-	//fmt.Println("Введите цену услуги: ")
-	//var price int64
-	//_, err = fmt.Scan(&price)
-	//if err != nil {
-	//	fmt.Errorf("Wrongerr %e", err)
-	//	return err
-	//}
+	serviceName := fmt.Sprintf("%s %s", input, Address)
 
 	err = services.AddService(serviceName, db)
 	if err != nil {

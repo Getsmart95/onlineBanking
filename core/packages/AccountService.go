@@ -1,13 +1,12 @@
 package services
 
 import (
-	"Golang/onlineBanking/database/postgres"
-	"Golang/onlineBanking/models"
+	"Golang/onlineBanking/core/database/postgres"
+	"Golang/onlineBanking/core/models"
 	"context"
 	"fmt"
-	"log"
-
 	"github.com/jackc/pgx/pgxpool"
+	"log"
 )
 
 func AddAccount(clientId int64, balance int64, status bool, cardNumber string, db *pgxpool.Pool) (err error) {
@@ -41,17 +40,20 @@ func AddAccount(clientId int64, balance int64, status bool, cardNumber string, d
 	return nil
 }
 
-
-func SearchAccountById(id int64, db *pgxpool.Pool) (Accounts []models.AccountForUser, err error){
+func SearchAccountById(id int64, db *pgxpool.Pool) (Accounts []models.AccountForUser, err error) {
 	var account models.AccountForUser
 
 	rows, err := db.Query(context.Background(), postgres.SearchAccountByID, id)
+	fmt.Println(err)
 	if err != nil {
-		fmt.Errorf("ne chitayutsya %e\n", err)
+		fmt.Errorf("Активных аккаунтов нет %e\n", err)
 		return nil, err
 	}
+
+	defer rows.Close()
+
 	for rows.Next() {
-		rows.Scan(&account.ID, &account.Name, &account.AccountNumber, &account.Balance, &account.Locked)
+		rows.Scan(&account.ID, &account.ClientId, &account.AccountNumber, &account.Balance, &account.Status, &account.CardNumber)
 
 		Accounts = append(Accounts, account)
 	}

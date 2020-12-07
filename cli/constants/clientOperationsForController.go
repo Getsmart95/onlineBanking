@@ -1,4 +1,4 @@
-package controllers
+package constants
 
 const AuthorizedTextOperations = ` Список операций 
 1. Посмотреть список счетов

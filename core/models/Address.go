@@ -6,7 +6,6 @@ type Address struct {
 	City     string
 	Street   string
 	home     int
-	apartmen int
 }
 
 type AddressList struct {

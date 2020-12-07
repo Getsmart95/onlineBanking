@@ -2,31 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68655705-3df4-4b9e-8ba8-f3c47a437411" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/go.imports.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cli/managerCli/manager.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cli/managerCli/models/atm.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cli/managerCli/models/client.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cli/managerCli/operations.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/packages/BankingService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/postgres/DDLs.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/postgres/DDLs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/postgres/DMLs.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/postgres/DMLs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/postgres/dbinit.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/postgres/dbinit.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/account.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/account.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/address.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/address.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/atm.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/atm.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hasher.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/history.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/history.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ATMService.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/AccountService.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/AuthService.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/ClientService.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/HistoryService.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/clientCli/client.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/clientCli/controllers/clientController.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/clientCli/controllers/operationsForController.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/clientCli/operations.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/managerCli/controller/ManagerController.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/managerCli/manager.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/managerCli/models/atm.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/managerCli/models/client.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/managerCli/operations.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/postgres/DDLs.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/postgres/DMLs.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/postgres/dbinit.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/postgres/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/account.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/address.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/atm.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/client.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/history.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ATMService.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/AccountService.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/BankingService.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ClientService.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/HistoryService.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +112,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cli/managerCli" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/OnlineBank/arm-cli-master/arm-cli-master" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -132,7 +132,7 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:postgres@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@7684e320" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@502cd705" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -153,34 +153,34 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="351" y="131" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1607280772250" />
-    <state x="549" y="173" key="FileChooserDialogImpl" timestamp="1607101733667">
+    <state x="549" y="173" key="FileChooserDialogImpl" timestamp="1607339290474">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="549" y="173" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1607101733667" />
-    <state width="1024" height="213" key="GridCell.Tab.0.bottom" timestamp="1607297559711">
+    <state x="549" y="173" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1607339290474" />
+    <state width="1024" height="213" key="GridCell.Tab.0.bottom" timestamp="1607349855401">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1607297559711" />
-    <state width="1024" height="213" key="GridCell.Tab.0.center" timestamp="1607297559710">
+    <state width="1024" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1607349855401" />
+    <state width="1024" height="213" key="GridCell.Tab.0.center" timestamp="1607349855399">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1607297559710" />
-    <state width="1024" height="213" key="GridCell.Tab.0.left" timestamp="1607297559709">
+    <state width="1024" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1607349855399" />
+    <state width="1024" height="213" key="GridCell.Tab.0.left" timestamp="1607349855399">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1607297559709" />
-    <state width="1024" height="213" key="GridCell.Tab.0.right" timestamp="1607297559711">
+    <state width="1024" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1607349855399" />
+    <state width="1024" height="213" key="GridCell.Tab.0.right" timestamp="1607349855400">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1024" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1607297559711" />
+    <state width="1024" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1607349855400" />
     <state width="189" height="457" key="HiddenNamespacesPopup" timestamp="1607112298252">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="189" height="457" key="HiddenNamespacesPopup/0.0.1536.834@0.0.1536.834" timestamp="1607112298252" />
-    <state x="664" y="308" width="322" height="234" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1607295043788">
+    <state x="664" y="308" width="322" height="234" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1607348197171">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="664" y="308" width="322" height="234" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.834@0.0.1536.834" timestamp="1607295043788" />
+    <state x="664" y="308" width="322" height="234" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1536.834@0.0.1536.834" timestamp="1607348197171" />
     <state x="523" y="172" key="com.intellij.database.run.ParametersPanel.Standalone" timestamp="1607292101001">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -193,10 +193,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="628" y="164" key="com.intellij.database.view.ui.DbObjectDialog/0.0.1536.834@0.0.1536.834" timestamp="1607266822967" />
-    <state x="462" y="149" width="611" height="536" key="find.popup" timestamp="1607296210433">
+    <state x="462" y="149" width="611" height="536" key="find.popup" timestamp="1607348470455">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="462" y="149" width="611" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1607296210433" />
+    <state x="462" y="149" width="611" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1607348470455" />
     <state x="511" y="38" key="refactoring.ChangeSignatureDialog" timestamp="1607269444733">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

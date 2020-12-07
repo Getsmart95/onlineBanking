@@ -26,8 +26,9 @@ type AccountWithUserName struct {
 
 type AccountForUser struct {
 	ID            int64
-	Name          string
+	ClientId      int64
 	AccountNumber int64
 	Balance       int64
-	Locked        bool
+	Status        bool
+	CardNumber 	  string
 }
