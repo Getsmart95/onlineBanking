@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"Golang/onlineBanking/cli/constants"
-	"Golang/onlineBanking/core/packages"
+	"onlineBanking/cli/constants"
+	"onlineBanking/core/packages"
 	"context"
 	"github.com/jackc/pgx/pgxpool"
 	"fmt"

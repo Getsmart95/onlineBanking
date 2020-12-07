@@ -1,8 +1,8 @@
 package services
 
 import (
-	"Golang/onlineBanking/core/database/postgres"
-	"Golang/onlineBanking/core/models"
+	"onlineBanking/core/database/postgres"
+	"onlineBanking/core/models"
 	"context"
 	"fmt"
 	"github.com/jackc/pgx/pgxpool"
@@ -75,12 +75,27 @@ func GetAllAccounts(db *pgxpool.Pool) (accounts []models.AccountWithUserName, er
 
 	for rows.Next() {
 		account := models.AccountWithUserName{}
-		err = rows.Scan(&account.Account.ID, &account.Account.ClientId, &account.Account.AccountNumber, &account.Account.Balance, &account.Account.Status, &account.Client.ID, &account.Client.Name, &account.Client.Surname, &account.Client.Login, &account.Client.Password, &account.Client.Phone, &account.Client.Status)
+		err = rows.Scan(
+			&account.Account.ID,
+			&account.Account.ClientId,
+			&account.Account.AccountNumber,
+			&account.Account.Balance,
+			&account.Account.Status,
+			&account.Client.ID,
+			&account.Client.Name,
+			&account.Client.Surname,
+			&account.Client.Login,
+			&account.Client.Password,
+			&account.Client.Phone,
+			&account.Client.Status,
+			&account.Client.VerifiedAt)
+		fmt.Println(err)
 		if err != nil {
 			log.Fatalf("2 wrong (Accc)")
 			return nil, err
 		}
 		accounts = append(accounts, account)
+
 	}
 	if rows.Err() != nil {
 		log.Fatalf("3 wrong (Accc)")

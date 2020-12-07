@@ -1,8 +1,8 @@
 package services
 
 import (
-	"Golang/onlineBanking/core/database/postgres"
-	"Golang/onlineBanking/core/models"
+	"onlineBanking/core/database/postgres"
+	"onlineBanking/core/models"
 	"context"
 	"github.com/jackc/pgx/pgxpool"
 	"log"

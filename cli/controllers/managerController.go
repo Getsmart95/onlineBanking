@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"Golang/onlineBanking/core/models"
-	"Golang/onlineBanking/core/packages"
+	"onlineBanking/core/models"
+	"onlineBanking/core/packages"
 	"bufio"
-	//"encoding/json"
-	//"encoding/xml"
+	"encoding/json"
+	"encoding/xml"
+	"io/ioutil"
 	"fmt"
 	"github.com/jackc/pgx/pgxpool"
 	"log"
@@ -199,241 +200,241 @@ func AddServiceHandler(db *pgxpool.Pool) (err error) {
 	return nil
 }
 
-//func AddClientsToJsonXmlFiles(db *pgxpool.Pool) (err error){
-//	clientsInSlice, err := dbupdate.GetAllClients(db)
-//	clients := cmodels.ClientList{clientsInSlice}
-//	if err != nil {
-//		fmt.Errorf("Ошибка при получении клиентов с БД %e", err)
-//		return err
-//	}
-//	////Json
-//	data, err := json.Marshal(clients)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	err = ioutil.WriteFile("clients.json", data, 0666)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	////XML
-//	data, err = xml.Marshal(clients)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	err = ioutil.WriteFile("clients.xml", data, 0666)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	////
-//	return nil
-//}
-//
-//func AddAccountsToJsonXmlFiles(db *pgxpool.Pool) (err error){
-//	AccountsInSLice, err := dbupdate.GetAllAccounts(db)
-//	Accounts := cmodels.AccountList{AccountsInSLice}
-//	if err != nil {
-//		fmt.Errorf("Ошибка при получении клиентов с БД %e", err)
-//		return err
-//	}
-//	////Json
-//	data, err := json.Marshal(Accounts)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	err = ioutil.WriteFile("account.json", data, 0666)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	////XML
-//	data, err = xml.Marshal(Accounts)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	err = ioutil.WriteFile("account.xml", data, 0666)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	////
-//	return nil
-//}
-//
-//func AddATMsToJsonXmlFiles(db *pgxpool.Pool) (err error){
-//	ATMsInSlice, err := dbupdate.GetAllATMs(db)
-//	ATMs := cmodels.AtmList{ATMsInSlice}
-//	if err != nil {
-//		fmt.Errorf("Ошибка при получении клиентов с БД %e", err)
-//		return err
-//	}
-//	////Json
-//	data, err := json.Marshal(ATMs)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	err = ioutil.WriteFile("ATM.json", data, 0666)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	////XML
-//	data, err = xml.Marshal(ATMs)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	err = ioutil.WriteFile("ATM.xml", data, 0666)
-//	if err != nil {
-//		log.Fatal(err)
-//		return err
-//	}
-//	return nil
-//}
-//
-//func AddAtmFromXmlJson(db *pgxpool.Pool) (err error) {
-//	/////XML
-//	file, err := ioutil.ReadFile("ATM.xml")
-//	if err != nil {
-//		log.Fatalf("Can't read file %e", err)
-//		return err
-//	}
-//	var Atms cmodels.AtmList
-//	err = xml.Unmarshal(file, &Atms)
-//	if err != nil {
-//		log.Fatal("Can't Unmarshal file", err)
-//		return err
-//	}
-//	for _, Atm := range Atms.ATMs{
-//		Address := Atm.Name
-//		Locked := Atm.Locked
-//		err = dbupdate.AddATM(Address, Locked, db)
-//		if err != nil {
-//			log.Printf("Проблема соединения с сервером %e", err)
-//			return err
-//		}
-//	}
-//
-//	////// JSON
-//	file, err = ioutil.ReadFile("ATM.json")
-//	if err != nil {
-//		log.Fatalf("Can't read file %e", err)
-//		return err
-//	}
-//	err = json.Unmarshal(file, &Atms)
-//	if err != nil {
-//		log.Fatal("Can't Unmarshal file: ", err)
-//		return err
-//	}
-//	for _, Atm := range Atms.ATMs{
-//		Address := Atm.Name
-//		Locked := Atm.Locked
-//		err = dbupdate.AddATM(Address, Locked, db)
-//		if err != nil {
-//			log.Printf("Проблема соединения с сервером %e", err)
-//			return err
-//		}
-//	}
-//	return nil
-//}
-//
-//func AddClientsFromXmlJson(db *pgxpool.Pool) (err error){
-//	file, err := ioutil.ReadFile("clients.xml")
-//	var clients cmodels.ClientList
-//	err = xml.Unmarshal(file, &clients)
-//	if err != nil {
-//		log.Fatalf("Всё очень плохо, не получилось анмаршилить из клиент ксмл", err)
-//		return err
-//	}
-//
-//	for _, user := range clients.Clients{
-//		err = dbupdate.AddClient(user.Name, user.Surname, user.Login, user.Password, user.NumberPhone, db)
-//		if err != nil {
-//			log.Fatalf("Ne tut to bilo delo")
-//			return err
-//		}
-//	}
-//	////JSON
-//	file, err = ioutil.ReadFile("clients.json")
-//	if err != nil {
-//		log.Fatalf("Can't read file %e", err)
-//		return err
-//	}
-//	var clientList cmodels.ClientList
-//	err = json.Unmarshal(file, &clientList)
-//	if err != nil {
-//		log.Fatal("Can't Unmarshal file: ", err)
-//		return err
-//	}
-//	for _, user := range clientList.Clients{
-//		fmt.Println(user.Name, user.Surname, user.Login, user.Password, user.NumberPhone)
-//		err = dbupdate.AddClient(user.Name, user.Surname, user.Login, user.Password, user.NumberPhone, db)
-//		if err != nil {
-//			log.Fatalf("Ne tut to bilo delo")
-//			return err
-//		}
-//	}
-//	return nil
-//}
-//
-//func AddAccountsFromXmlJson(db *pgxpool.Pool) (err error) {
-//	file, err := ioutil.ReadFile("account.xml")
-//	if err != nil {
-//		log.Fatalf("Wring BLA %s", err)
-//		return err
-//	}
+func AddClientsToJsonXmlFiles(db *pgxpool.Pool) (err error){
+	clientsInSlice, err := services.GetAllClients(db)
+	clients := models.ClientList{clientsInSlice}
+	if err != nil {
+		fmt.Errorf("Ошибка при получении клиентов с БД %e", err)
+		return err
+	}
+	////Json
+	data, err := json.Marshal(clients)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/clients.json", data, 0666)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	////XML
+	data, err = xml.Marshal(clients)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/clients.xml", data, 0666)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
+	return nil
+}
+
+func AddAccountsToJsonXmlFiles(db *pgxpool.Pool) (err error){
+	AccountsInSLice, err := services.GetAllAccounts(db)
+	Accounts := models.AccountList{AccountsInSLice}
+	if err != nil {
+		fmt.Errorf("Ошибка при получении клиентов с БД %e", err)
+		return err
+	}
+	////Json
+	data, err := json.Marshal(Accounts)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/account.json", data, 0666)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	////XML
+	data, err = xml.Marshal(Accounts)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/account.xml", data, 0666)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	////
+	return nil
+}
+
+func AddATMsToJsonXmlFiles(db *pgxpool.Pool) (err error){
+	ATMsInSlice, err := services.GetAllATMs(db)
+	ATMs := models.ATMList{ATMsInSlice}
+	if err != nil {
+		fmt.Errorf("Ошибка при получении клиентов с БД %e", err)
+		return err
+	}
+	////Json
+	data, err := json.Marshal(ATMs)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/ATM.json", data, 0666)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	////XML
+	data, err = xml.Marshal(ATMs)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/ATM.xml", data, 0666)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	return nil
+}
+
+func AddAtmFromXmlJson(db *pgxpool.Pool) (err error) {
+	/////XML
+	file, err := ioutil.ReadFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/ATM.xml")
+	if err != nil {
+		log.Fatalf("Can't read file %e", err)
+		return err
+	}
+	var Atms models.ATMList
+	err = xml.Unmarshal(file, &Atms)
+	if err != nil {
+		log.Fatal("Can't Unmarshal file", err)
+		return err
+	}
+	for _, Atm := range Atms.ATMs{
+		Address := Atm.Name
+		Status := Atm.Status
+		err = services.AddATM(Address, Status, db)
+		if err != nil {
+			log.Printf("Проблема соединения с сервером %e", err)
+			return err
+		}
+	}
+
+	////// JSON
+	file, err = ioutil.ReadFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/ATM.json")
+	if err != nil {
+		log.Fatalf("Can't read file %e", err)
+		return err
+	}
+	err = json.Unmarshal(file, &Atms)
+	if err != nil {
+		log.Fatal("Can't Unmarshal file: ", err)
+		return err
+	}
+	for _, Atm := range Atms.ATMs{
+		Address := Atm.Name
+		Status := Atm.Status
+		err = services.AddATM(Address, Status, db)
+		if err != nil {
+			log.Printf("Проблема соединения с сервером %e", err)
+			return err
+		}
+	}
+	return nil
+}
+
+func AddClientsFromXmlJson(db *pgxpool.Pool) (err error){
+	file, err := ioutil.ReadFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/clients.xml")
+	var clients models.ClientList
+	err = xml.Unmarshal(file, &clients)
+	if err != nil {
+		log.Fatalf("Всё очень плохо, не получилось анмаршилить из клиент ксмл", err)
+		return err
+	}
+
+	for _, user := range clients.Clients{
+		err = services.AddClient(user.Name, user.Surname, user.Login, user.Password, user.Age, user.Gender, user.Phone, db)
+		if err != nil {
+			log.Fatalf("Ne tut to bilo delo")
+			return err
+		}
+	}
+	////JSON
+	file, err = ioutil.ReadFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/clients.json")
+	if err != nil {
+		log.Fatalf("Can't read file %e", err)
+		return err
+	}
+	var clientList models.ClientList
+	err = json.Unmarshal(file, &clientList)
+	if err != nil {
+		log.Fatal("Can't Unmarshal file: ", err)
+		return err
+	}
+	for _, user := range clientList.Clients{
+		fmt.Println(user.Name, user.Surname, user.Login, user.Password, user.Age, user.Gender, user.Phone)
+		err = services.AddClient(user.Name, user.Surname, user.Login, user.Password, user.Age, user.Gender, user.Phone, db)
+		if err != nil {
+			log.Fatalf("Ne tut to bilo delo")
+			return err
+		}
+	}
+	return nil
+}
+
+func AddAccountsFromXmlJson(db *pgxpool.Pool) (err error) {
+	file, err := ioutil.ReadFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/account.xml")
+	if err != nil {
+		log.Fatalf("Wring BLA %s", err)
+		return err
+	}
+	var AccountList models.AccountList
+	err = xml.Unmarshal(file, &AccountList)
+	if err != nil {
+		log.Fatalf("Owibka BLA : %s", err)
+		return err
+	}
+
+	for _, Account := range AccountList.AccountWithUserName{
+		fmt.Println(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Age, Account.Client.Gender, Account.Client.Phone)
+		err = services.AddClient(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Age, Account.Client.Gender, Account.Client.Phone, db)
+		if err != nil {
+			log.Fatalf("Ne poluchilos Add Client %s", err)
+			return err
+		}
+		err = services.AddAccount(Account.Account.ClientId, Account.Account.Balance, Account.Account.Status, Account.Account.CardNumber, db)
+		if err != nil {
+			log.Fatalf("Ne poluchilos Add Account %s", err)
+			return err
+		}
+	}
+	///JSON
+	file, err = ioutil.ReadFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/account.json")
+	if err != nil {
+		log.Fatalf("Wring BLA %s", err)
+		return err
+	}
 //	var AccountList cmodels.AccountList
-//	err = xml.Unmarshal(file, &AccountList)
-//	if err != nil {
-//		log.Fatalf("Owibka BLA : %s", err)
-//		return err
-//	}
-//
-//	for _, Account := range AccountList.AccountWithUserName{
-//		fmt.Println(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.NumberPhone)
-//		err = dbupdate.AddClient(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.NumberPhone, db)
-//		if err != nil {
-//			log.Fatalf("Ne poluchilos Add Client %s", err)
-//			return err
-//		}
-//		err = dbupdate.AddAccount(Account.Account.UserId, Account.Account.Name, Account.Account.Balance , Account.Account.Locked, db)
-//		if err != nil {
-//			log.Fatalf("Ne poluchilos Add Account %s", err)
-//			return err
-//		}
-//	}
-//	///JSON
-//	file, err = ioutil.ReadFile("account.json")
-//	if err != nil {
-//		log.Fatalf("Wring BLA %s", err)
-//		return err
-//	}
-////	var AccountList cmodels.AccountList
-//	err = json.Unmarshal(file, &AccountList)
-//	if err != nil {
-//		log.Fatalf("Owibka BLA : %s", err)
-//		return err
-//	}
-//
-//	for _, Account := range AccountList.AccountWithUserName{
-//		fmt.Println(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.NumberPhone)
-//		err = dbupdate.AddClient(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.NumberPhone, db)
-//		if err != nil {
-//			log.Fatalf("Ne poluchilos Add Client %s", err)
-//			return err
-//		}
-//		err = dbupdate.AddAccount(Account.Account.UserId, Account.Account.Name, Account.Account.Balance , Account.Account.Locked, db)
-//		//err = dbupdate.AddAccount(Account.Account.UserId, Account.Account.Name, Account.Account.Locked, db)
-//		if err != nil {
-//			log.Fatalf("Ne poluchilos Add Account %s", err)
-//			return err
-//		}
-//	}
-//	return nil
-//}
+	err = json.Unmarshal(file, &AccountList)
+	if err != nil {
+		log.Fatalf("Owibka BLA : %s", err)
+		return err
+	}
+
+	for _, Account := range AccountList.AccountWithUserName{
+		fmt.Println(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Phone)
+		err = services.AddClient(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Age, Account.Client.Gender, Account.Client.Phone, db)
+		if err != nil {
+			log.Fatalf("Ne poluchilos Add Client %s", err)
+			return err
+		}
+		err = services.AddAccount(Account.Account.ClientId, Account.Account.Balance, Account.Account.Status, Account.Account.CardNumber, db)
+		//err = dbupdate.AddAccount(Account.Account.UserId, Account.Account.Name, Account.Account.Locked, db)
+		if err != nil {
+			log.Fatalf("Ne poluchilos Add Account %s", err)
+			return err
+		}
+	}
+	return nil
+}

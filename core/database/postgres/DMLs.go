@@ -20,7 +20,9 @@ const AddService = `insert into services( name )
 
 const GetAllClients = `select * from clients`
 
-const GetAllAccounts = `select * from accounts a left join clients c on a.client_id = c.id`
+const GetAllAccounts = `select a.id, a.client_id, a.account_number, a.balance, a.status,
+									c.id,c.name,c.surname,c.login,c.password,c.phone,c.status,c.verified_at 
+						from accounts a left join clients c on a.client_id = c.id`
 
 const GetAllATMs = `select * from ATMs`
 

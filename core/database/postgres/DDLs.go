@@ -11,7 +11,8 @@ const clientsTable = `create table if not exists clients(
 	age integer not null,
 	gender text not null,
 	phone text not null,
-	status boolean not null
+	status boolean not null,
+	verified_at time default CURRENT_TIMESTAMP
 );`
 
 const clientsAccountsTable = `create table if not exists accounts(

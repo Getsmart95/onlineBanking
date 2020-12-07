@@ -1,8 +1,8 @@
 package services
 
 import (
-	"Golang/onlineBanking/core/database/postgres"
-	"Golang/onlineBanking/core/models"
+	"onlineBanking/core/database/postgres"
+	"onlineBanking/core/models"
 	"github.com/jackc/pgx/pgxpool"
 	"context"
 	"crypto/md5"
@@ -34,10 +34,12 @@ func QueryError(text string) (err error) {
 func GetAllClients(db *pgxpool.Pool) (clients []models.Client, err error) {
 	rows, err := db.Query(context.Background(), postgres.GetAllClients)
 	if err != nil {
+		fmt.Println(err)
 		log.Fatalf("1 wrong")
 		return nil, err
 	}
-
+	fmt.Println(err)
+	defer rows.Close()
 	//defer func() {
 	//	if innerErr := rows.Close(); innerErr != nil {
 	//		clients = nil
@@ -46,7 +48,18 @@ func GetAllClients(db *pgxpool.Pool) (clients []models.Client, err error) {
 
 	for rows.Next() {
 		client := models.Client{}
-		err = rows.Scan(&client.ID, &client.Name, &client.Surname, &client.Phone, &client.Login, &client.Password)
+		err = rows.Scan(
+			&client.ID,
+			&client.Name,
+			&client.Surname,
+			&client.Login,
+			&client.Password,
+			&client.Age,
+			&client.Gender,
+			&client.Phone,
+			&client.Status,
+			&client.VerifiedAt)
+		fmt.Println(err)
 		if err != nil {
 			log.Fatalf("2 wrong")
 			return nil, err

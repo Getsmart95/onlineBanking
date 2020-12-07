@@ -1,9 +1,9 @@
 package main
 
 import (
-	"Golang/onlineBanking/cli/controllers"
-	"Golang/onlineBanking/core/database/postgres"
-	"Golang/onlineBanking/cli/constants"
+	"onlineBanking/cli/controllers"
+	"onlineBanking/core/database/postgres"
+	"onlineBanking/cli/constants"
 	"github.com/jackc/pgx/pgxpool"
 	"context"
 	"os"
@@ -45,18 +45,18 @@ func AutorizeByAdmin(db *pgxpool.Pool) {
 			controllers.AddAccountHandler(db)
 		case "3":
 			controllers.AddServiceHandler(db)
-		//case "4":
-		//	controllers.AddClientsToJsonXmlFiles(db)
-		//case "5":
-		//	controllers.AddAccountsToJsonXmlFiles(db)
-		//case "6":
-		//	controllers.AddATMsToJsonXmlFiles(db)
-		//case "7":
-		//	controllers.AddClientsFromXmlJson(db)
-		//case "8":
-		//	controllers.AddAccountsFromXmlJson(db)
-		//case "9":
-		//	controllers.AddAtmFromXmlJson(db)
+		case "4":
+			controllers.AddClientsToJsonXmlFiles(db)
+		case "5":
+			controllers.AddAccountsToJsonXmlFiles(db)
+		case "6":
+			controllers.AddATMsToJsonXmlFiles(db)
+		case "7":
+			controllers.AddClientsFromXmlJson(db)
+		case "8":
+			controllers.AddAccountsFromXmlJson(db)
+		case "9":
+			controllers.AddAtmFromXmlJson(db)
 		case "10":
 			controllers.AddATMHandler(db)
 		case "q":
