@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68655705-3df4-4b9e-8ba8-f3c47a437411" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cli/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/cli/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cli/constants/adminOperationsForController.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cli/controllers/clientController.go" beforeDir="false" afterPath="$PROJECT_DIR$/cli/controllers/clientController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cli/controllers/managerController.go" beforeDir="false" afterPath="$PROJECT_DIR$/cli/controllers/managerController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cli/manager.go" beforeDir="false" afterPath="$PROJECT_DIR$/cli/manager.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/database/postgres/DDLs.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/database/postgres/DDLs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/database/postgres/DMLs.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/database/postgres/DMLs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models/Account.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/Account.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/packages/ATMService.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/packages/ATMService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/packages/AccountService.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/packages/AccountService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/packages/BankingService.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/packages/BankingService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/packages/ClientService.go" beforeDir="false" afterPath="$PROJECT_DIR$/core/packages/ClientService.go" afterDir="false" />
-    </list>
+    <list default="true" id="68655705-3df4-4b9e-8ba8-f3c47a437411" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
