@@ -40,11 +40,6 @@ func GetAllClients(db *pgxpool.Pool) (clients []models.Client, err error) {
 	}
 	fmt.Println(err)
 	defer rows.Close()
-	//defer func() {
-	//	if innerErr := rows.Close(); innerErr != nil {
-	//		clients = nil
-	//	}
-	//}()
 
 	for rows.Next() {
 		client := models.Client{}
@@ -86,7 +81,6 @@ func Login(login string, password string, db *pgxpool.Pool) (loginPredicate bool
 		//fmt.Println(makeHash(password), " ", dbPassword)
 		return true, err
 	}
-	//fmt.Println(makeHash(password), " ", dbPassword)
 	return true, nil
 }
 

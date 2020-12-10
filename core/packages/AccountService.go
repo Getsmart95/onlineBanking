@@ -1,12 +1,12 @@
 package services
 
 import (
-	"onlineBanking/core/database/postgres"
-	"onlineBanking/core/models"
 	"context"
 	"fmt"
 	"github.com/jackc/pgx/pgxpool"
 	"log"
+	"onlineBanking/core/database/postgres"
+	"onlineBanking/core/models"
 )
 
 func AddAccount(clientId int64, balance int64, status bool, cardNumber string, db *pgxpool.Pool) (err error) {
@@ -72,12 +72,6 @@ func GetAllAccounts(db *pgxpool.Pool) (accounts []models.AccountWithUserName, er
 		log.Fatalf("1 wrong (Accc)")
 		return nil, err
 	}
-
-	// defer func() {
-	// 	if innerErr := rows.Close(); innerErr != nil {
-	// 		accounts = nil
-	// 	}
-	// }()
 
 	for rows.Next() {
 		account := models.AccountWithUserName{}

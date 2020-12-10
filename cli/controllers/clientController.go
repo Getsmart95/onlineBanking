@@ -118,17 +118,7 @@ func TransferToAccount(AccountNumber int64, TransferCardNumber string, Amount in
 
 	var ServiceId int64
 	ServiceId = 1
-	//tx, err := db.Begin()
-	//if err != nil {
-	//	return err
-	//}
-	//defer func() {
-	//	if err != nil {
-	//		_ = tx.Rollback()
-	//		return
-	//	}
-	//	err = tx.Commit()
-	//}()
+
 	_, err = db.Exec(context.Background(), `UPDATE accounts set balance = balance - ($1) 
 								                 where account_Number = ($2)`, Amount, AccountNumber)
 	if err != nil {
@@ -237,25 +227,10 @@ func ChooseToService(AccountNumber int64, db *pgxpool.Pool) (err error) {
 }
 
 func Transfer(accountNumber int64, Ammount int64, ServiceID int64, db *pgxpool.Pool) (err error) {
-	//tx, err := db.Begin()
-	//if err != nil {
-	//	return err
-	//}
-	//defer func() {
-	//	if err != nil {
-	//		_ = tx.Rollback()
-	//		return
-	//	}
-	//	err = tx.Commit()
-	//}()
+
 	var Message string
 	Message = "Оплата услуги"
 
-	//var AccountBalance int64
-	//err = db.QueryRow(context.Background(), `select balance from accounts where accountNumber = ($1)`, accountNumber).Scan(&AccountBalance)
-	//if err != nil {
-	//	return err
-	//}
 	var ServiceAccountNumber int64
 	err = db.QueryRow(context.Background(), `select account_number from services where id = ($1)`, ServiceID).Scan(&ServiceAccountNumber)
 	if err != nil {

@@ -24,11 +24,6 @@ func GetAllServices(db *pgxpool.Pool) (Services []models.Service, err error){
 		fmt.Errorf("%s, %e",postgres.GetAllServices, err)
 		return nil, err
 	}
-	//defer func() {
-	//	if innerErr := rows.Close(); innerErr != nil {
-	//		Services = nil
-	//	}
-	//}()
 
 	for rows.Next(){
 		Service := models.Service{}

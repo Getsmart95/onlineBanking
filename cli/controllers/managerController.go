@@ -1,15 +1,15 @@
 package controllers
 
 import (
-	"onlineBanking/core/models"
-	"onlineBanking/core/packages"
 	"bufio"
 	"encoding/json"
 	"encoding/xml"
-	"io/ioutil"
 	"fmt"
 	"github.com/jackc/pgx/pgxpool"
+	"io/ioutil"
 	"log"
+	"onlineBanking/core/models"
+	"onlineBanking/core/packages"
 	"os"
 )
 
@@ -81,40 +81,7 @@ func AddATMHandler(db *pgxpool.Pool) (err error) {
 	var newATM models.ATM
 
 	fmt.Println("Enter ATMs address")
-	//fmt.Println("Введите страну: ")
-	//var country string
-	//_, err = fmt.Scan(&country)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//fmt.Println("Введите город: ")
-	//var city string
-	//_, err = fmt.Scan(&city)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//fmt.Println("Введите улицу: ")
-	//var street string
-	//_, err = fmt.Scan(&street)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//fmt.Println("Введите дом: ")
-	//var home string
-	//_, err = fmt.Scan(&home)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//fmt.Println("Enter true if atm is activity, else false")
-	//_, err = fmt.Scan(&newATM.Status)
-	//if err != nil {
-	//	log.Printf("Ошибка при вводе данных")
-	//	return err
-	//}
+
 	var input string
 	fmt.Scan(&input)
 	reader := bufio.NewReader(os.Stdin)
@@ -201,7 +168,6 @@ func AddServiceHandler(db *pgxpool.Pool) (err error) {
 	var accountNumber int64
 	fmt.Scan(&accountNumber)
 
-
 	err = services.AddService(serviceName, accountNumber, db)
 	if err != nil {
 		fmt.Errorf("errorr %e", err)
@@ -210,7 +176,7 @@ func AddServiceHandler(db *pgxpool.Pool) (err error) {
 	return nil
 }
 
-func AddClientsToJsonXmlFiles(db *pgxpool.Pool) (err error){
+func AddClientsToJsonXmlFiles(db *pgxpool.Pool) (err error) {
 	clientsInSlice, err := services.GetAllClients(db)
 	clients := models.ClientList{clientsInSlice}
 	if err != nil {
@@ -223,7 +189,7 @@ func AddClientsToJsonXmlFiles(db *pgxpool.Pool) (err error){
 		log.Fatal(err)
 		return err
 	}
-	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/clients.json", data, 0666)
+	err = ioutil.WriteFile(os.Getenv("GOPATH")+"/src/onlinebanking/data/clients.json", data, 0666)
 	if err != nil {
 		log.Fatal(err)
 		return err
@@ -234,7 +200,7 @@ func AddClientsToJsonXmlFiles(db *pgxpool.Pool) (err error){
 		log.Fatal(err)
 		return err
 	}
-	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/clients.xml", data, 0666)
+	err = ioutil.WriteFile(os.Getenv("GOPATH")+"/src/onlinebanking/data/clients.xml", data, 0666)
 	if err != nil {
 		log.Fatal(err)
 		return err
@@ -243,7 +209,7 @@ func AddClientsToJsonXmlFiles(db *pgxpool.Pool) (err error){
 	return nil
 }
 
-func AddAccountsToJsonXmlFiles(db *pgxpool.Pool) (err error){
+func AddAccountsToJsonXmlFiles(db *pgxpool.Pool) (err error) {
 	AccountsInSLice, err := services.GetAllAccounts(db)
 	Accounts := models.AccountList{AccountsInSLice}
 	if err != nil {
@@ -256,7 +222,7 @@ func AddAccountsToJsonXmlFiles(db *pgxpool.Pool) (err error){
 		log.Fatal(err)
 		return err
 	}
-	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/account.json", data, 0666)
+	err = ioutil.WriteFile(os.Getenv("GOPATH")+"/src/onlinebanking/data/account.json", data, 0666)
 	if err != nil {
 		log.Fatal(err)
 		return err
@@ -267,7 +233,7 @@ func AddAccountsToJsonXmlFiles(db *pgxpool.Pool) (err error){
 		log.Fatal(err)
 		return err
 	}
-	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/account.xml", data, 0666)
+	err = ioutil.WriteFile(os.Getenv("GOPATH")+"/src/onlinebanking/data/account.xml", data, 0666)
 	if err != nil {
 		log.Fatal(err)
 		return err
@@ -276,7 +242,7 @@ func AddAccountsToJsonXmlFiles(db *pgxpool.Pool) (err error){
 	return nil
 }
 
-func AddATMsToJsonXmlFiles(db *pgxpool.Pool) (err error){
+func AddATMsToJsonXmlFiles(db *pgxpool.Pool) (err error) {
 	ATMsInSlice, err := services.GetAllATMs(db)
 	ATMs := models.ATMList{ATMsInSlice}
 	if err != nil {
@@ -289,7 +255,7 @@ func AddATMsToJsonXmlFiles(db *pgxpool.Pool) (err error){
 		log.Fatal(err)
 		return err
 	}
-	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/ATM.json", data, 0666)
+	err = ioutil.WriteFile(os.Getenv("GOPATH")+"/src/onlinebanking/data/ATM.json", data, 0666)
 	if err != nil {
 		log.Fatal(err)
 		return err
@@ -300,7 +266,7 @@ func AddATMsToJsonXmlFiles(db *pgxpool.Pool) (err error){
 		log.Fatal(err)
 		return err
 	}
-	err = ioutil.WriteFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/ATM.xml", data, 0666)
+	err = ioutil.WriteFile(os.Getenv("GOPATH")+"/src/onlinebanking/data/ATM.xml", data, 0666)
 	if err != nil {
 		log.Fatal(err)
 		return err
@@ -321,7 +287,7 @@ func AddAtmFromXmlJson(db *pgxpool.Pool) (err error) {
 		log.Fatal("Can't Unmarshal file", err)
 		return err
 	}
-	for _, Atm := range Atms.ATMs{
+	for _, Atm := range Atms.ATMs {
 		Address := Atm.Name
 		Status := Atm.Status
 		err = services.AddATM(Address, Status, db)
@@ -342,7 +308,7 @@ func AddAtmFromXmlJson(db *pgxpool.Pool) (err error) {
 		log.Fatal("Can't Unmarshal file: ", err)
 		return err
 	}
-	for _, Atm := range Atms.ATMs{
+	for _, Atm := range Atms.ATMs {
 		Address := Atm.Name
 		Status := Atm.Status
 		err = services.AddATM(Address, Status, db)
@@ -354,7 +320,7 @@ func AddAtmFromXmlJson(db *pgxpool.Pool) (err error) {
 	return nil
 }
 
-func AddClientsFromXmlJson(db *pgxpool.Pool) (err error){
+func AddClientsFromXmlJson(db *pgxpool.Pool) (err error) {
 	file, err := ioutil.ReadFile(os.Getenv("GOPATH") + "/src/onlinebanking/data/clients.xml")
 	var clients models.ClientList
 	err = xml.Unmarshal(file, &clients)
@@ -363,7 +329,7 @@ func AddClientsFromXmlJson(db *pgxpool.Pool) (err error){
 		return err
 	}
 
-	for _, user := range clients.Clients{
+	for _, user := range clients.Clients {
 		err = services.AddClient(
 			user.Name,
 			user.Surname,
@@ -389,7 +355,7 @@ func AddClientsFromXmlJson(db *pgxpool.Pool) (err error){
 		log.Fatal("Can't Unmarshal file: ", err)
 		return err
 	}
-	for _, user := range clientList.Clients{
+	for _, user := range clientList.Clients {
 		fmt.Println(user.Name, user.Surname, user.Login, user.Password, user.Age, user.Gender, user.Phone)
 		err = services.AddClient(
 			user.Name,
@@ -420,7 +386,7 @@ func AddAccountsFromXmlJson(db *pgxpool.Pool) (err error) {
 		return err
 	}
 
-	for _, Account := range AccountList.AccountWithUserName{
+	for _, Account := range AccountList.AccountWithUserName {
 		fmt.Println(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Age, Account.Client.Gender, Account.Client.Phone)
 		err = services.AddClient(
 			Account.Client.Name,
@@ -450,14 +416,14 @@ func AddAccountsFromXmlJson(db *pgxpool.Pool) (err error) {
 		log.Fatalf("Wring BLA %s", err)
 		return err
 	}
-//	var AccountList cmodels.AccountList
+	//	var AccountList cmodels.AccountList
 	err = json.Unmarshal(file, &AccountList)
 	if err != nil {
 		log.Fatalf("Owibka BLA : %s", err)
 		return err
 	}
 
-	for _, Account := range AccountList.AccountWithUserName{
+	for _, Account := range AccountList.AccountWithUserName {
 		fmt.Println(Account.Client.Name, Account.Client.Surname, Account.Client.Login, Account.Client.Password, Account.Client.Phone)
 		err = services.AddClient(
 			Account.Client.Name,

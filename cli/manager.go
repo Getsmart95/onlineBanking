@@ -7,10 +7,7 @@ import (
 	"github.com/jackc/pgx/pgxpool"
 	"context"
 	"os"
-	//"strings"
-	//"encoding/xml"
 	"fmt"
-	//"io/ioutil"
 	"log"
 )
 
